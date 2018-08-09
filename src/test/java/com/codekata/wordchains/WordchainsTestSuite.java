@@ -35,7 +35,7 @@ public class WordchainsTestSuite {
     @Test
     public void testGetChain() {
         //Given
-        WordchainsCreator wordchain = new WordchainsCreator(new String[] {"cat", "code", "cog", "cot", "dog", "goad",
+        WordchainsCreator wordchain = new WordchainsCreator(new String[]{"cat", "code", "cog", "cot", "dog", "goad",
                 "gold", "lead", "load", "robs", "rode", "rods", "ruby", "rubs"});
         //When
         String[] chain1 = wordchain.getChain("cat", "dog");
@@ -50,7 +50,7 @@ public class WordchainsTestSuite {
     @Test
     public void testGetChainWithWordOutsideDictionary() {
         //Given
-        WordchainsCreator wordchain = new WordchainsCreator(new String[] {"code", "cog", "cot", "dog", "goad", "gold",
+        WordchainsCreator wordchain = new WordchainsCreator(new String[]{"code", "cog", "cot", "dog", "goad", "gold",
                 "lead", "load", "robs", "rode", "rods", "ruby", "rubs"});
         //When
         String[] chain = wordchain.getChain("cat", "dog");
@@ -107,6 +107,96 @@ public class WordchainsTestSuite {
         printChain(chain);
         long end = System.currentTimeMillis();
         assertArrayEquals(new String[]{"cat", "cot", "cog", "dog"}, chain);
+        System.out.println("Finding word chain has taken: " + (end - begin) + "ms");
+    }
+
+    @Test
+    public void testTimeOfGetChainFromCatToDog() {
+        //Given
+        DictionaryLoader dictionaryFromFile = new DictionaryFromFileLoader();
+        WordchainsCreator wordchain = new WordchainsCreator(dictionaryFromFile.loadDictionary());
+        //When
+        long begin = System.currentTimeMillis();
+        String[] chain = wordchain.getChain("cat", "dog");
+        long end = System.currentTimeMillis();
+        //Then
+        printChain(chain);
+        assertArrayEquals(new String[]{"cat", "cot", "cog", "dog"}, chain);
+        System.out.println("Finding word chain has taken: " + (end - begin) + "ms");
+    }
+
+    @Test
+    public void testTimeOfGetChainFromDogToCat() {
+        //Given
+        DictionaryLoader dictionaryFromFile = new DictionaryFromFileLoader();
+        WordchainsCreator wordchain = new WordchainsCreator(dictionaryFromFile.loadDictionary());
+        //When
+        long begin = System.currentTimeMillis();
+        String[] chain = wordchain.getChain("dog", "cat");
+        long end = System.currentTimeMillis();
+        //Then
+        printChain(chain);
+        assertArrayEquals(new String[]{"dog", "cog", "cot", "cat"}, chain);
+        System.out.println("Finding word chain has taken: " + (end - begin) + "ms");
+    }
+
+    @Test
+    public void testTimeOfGetChainFromLeadToGold() {
+        //Given
+        DictionaryLoader dictionaryFromFile = new DictionaryFromFileLoader();
+        WordchainsCreator wordchain = new WordchainsCreator(dictionaryFromFile.loadDictionary());
+        //When
+        long begin = System.currentTimeMillis();
+        String[] chain = wordchain.getChain("lead", "gold");
+        long end = System.currentTimeMillis();
+        //Then
+        printChain(chain);
+        assertArrayEquals(new String[]{"lead", "load", "goad", "gold"}, chain);
+        System.out.println("Finding word chain has taken: " + (end - begin) + "ms");
+    }
+
+    @Test
+    public void testTimeOfGetChainFromGoldToLead() {
+        //Given
+        DictionaryLoader dictionaryFromFile = new DictionaryFromFileLoader();
+        WordchainsCreator wordchain = new WordchainsCreator(dictionaryFromFile.loadDictionary());
+        //When
+        long begin = System.currentTimeMillis();
+        String[] chain = wordchain.getChain("gold", "lead");
+        long end = System.currentTimeMillis();
+        //Then
+        printChain(chain);
+        assertArrayEquals(new String[]{"gold", "goad", "load", "lead"}, chain);
+        System.out.println("Finding word chain has taken: " + (end - begin) + "ms");
+    }
+
+    @Test
+    public void testTimeOfGetChainFromRubyToCode() {
+        //Given
+        DictionaryLoader dictionaryFromFile = new DictionaryFromFileLoader();
+        WordchainsCreator wordchain = new WordchainsCreator(dictionaryFromFile.loadDictionary());
+        //When
+        long begin = System.currentTimeMillis();
+        String[] chain = wordchain.getChain("ruby", "code");
+        long end = System.currentTimeMillis();
+        //Then
+        printChain(chain);
+        assertArrayEquals(new String[]{"ruby", "rubs", "robs", "rods", "rode", "code"}, chain);
+        System.out.println("Finding word chain has taken: " + (end - begin) + "ms");
+    }
+
+    @Test
+    public void testTimeOfGetChainFromCodeToRuby() {
+        //Given
+        DictionaryLoader dictionaryFromFile = new DictionaryFromFileLoader();
+        WordchainsCreator wordchain = new WordchainsCreator(dictionaryFromFile.loadDictionary());
+        //When
+        long begin = System.currentTimeMillis();
+        String[] chain = wordchain.getChain("code", "ruby");
+        long end = System.currentTimeMillis();
+        //Then
+        printChain(chain);
+        assertArrayEquals(new String[]{"code", "rode", "rods", "robs", "rubs", "ruby"}, chain);
         System.out.println("Finding word chain has taken: " + (end - begin) + "ms");
     }
 
