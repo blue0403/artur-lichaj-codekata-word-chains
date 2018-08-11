@@ -181,7 +181,7 @@ public class WordchainsTestSuite {
         long end = System.currentTimeMillis();
         //Then
         printChain(chain);
-        assertArrayEquals(new String[]{"ruby", "rubs", "robs", "rods", "rode", "code"}, chain);
+        assertArrayEquals(new String[]{"ruby", "rube", "robe", "rode", "code"}, chain);
         System.out.println("Finding word chain has taken: " + (end - begin) + "ms");
     }
 
@@ -196,7 +196,7 @@ public class WordchainsTestSuite {
         long end = System.currentTimeMillis();
         //Then
         printChain(chain);
-        assertArrayEquals(new String[]{"code", "rode", "rods", "robs", "rubs", "ruby"}, chain);
+        assertArrayEquals(new String[]{"code", "rode", "robe", "rube", "ruby"}, chain);
         System.out.println("Finding word chain has taken: " + (end - begin) + "ms");
     }
 
